@@ -342,6 +342,7 @@ async function createNewVariantService() {
 export async function getSuperadminContext(app: INestApplicationContext): Promise<RequestContext> {
     const {superadminCredentials} = app.get(ConfigService).authOptions;
     const superAdminUser = await app.get(TransactionalConnection)
+        .rawConnection
         .getRepository(User)
         .findOneOrFail({where: {identifier: superadminCredentials.identifier}});
     return app.get(RequestContextService).create({
@@ -478,6 +479,7 @@ async function importData() {
 export async function getSuperadminContext(app: INestApplicationContext): Promise<RequestContext> {
     const {superadminCredentials} = app.get(ConfigService).authOptions;
     const superAdminUser = await app.get(TransactionalConnection)
+        .rawConnection
         .getRepository(User)
         .findOneOrFail({where: {identifier: superadminCredentials.identifier}});
     return app.get(RequestContextService).create({
